@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:TimelinePulse.Controls"
+             x:Class="TimelinePulse.Views.Templates.TaskItemTemplate">
+    <ContentView.Resources>
+        <ResourceDictionary>
+
+            <Style x:Key="LineStyle" TargetType="BoxView">
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Fill" />
+                <Setter Property="WidthRequest" Value="1" />
+            </Style>
+
+            <Style x:Key="PointStyle" TargetType="BoxView">
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="CornerRadius">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="CornerRadius">
+                            <On Platform="Android" Value="24" />
+                            <On Platform="iOS" Value="10" />
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Start" />
+                <Setter Property="HeightRequest" Value="16" />
+                <Setter Property="WidthRequest" Value="16" />
+                <Setter Property="Margin" Value="0, 6, 0, 0" />
+            </Style>
+
+            <Style x:Key="NameTextStyle" TargetType="Label">
+                <Setter Property="FontFamily" Value="{StaticResource PoppinsRegular}"/>
+                <Setter Property="FontSize" Value="{StaticResource FontSize16}" />
+                <Setter Property="TextColor" Value="{StaticResource BlackColor}" />
+            </Style>
+
+            <Style x:Key="CategoryTextStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="{StaticResource FontSize12}" />
+                <Setter Property="FontFamily" Value="{StaticResource PoppinsLight}"/>
+            </Style>
+
+            <Style x:Key="TimeTextStyle" TargetType="Label" BasedOn="{StaticResource CategoryTextStyle}">
+                <Setter Property="FontFamily" Value="{StaticResource PoppinsRegular}"/>
+                <Setter Property="Margin" Value="12, 6, 12, 0" />
+            </Style>
+
+            <Style x:Key="PhotoStyle" TargetType="controls:CircularImage">
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="HeightRequest" Value="40" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <Grid
+            BackgroundColor="{StaticResource WhiteColor}"
+            ColumnSpacing="0"
+            RowSpacing="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="12" />
+            </Grid.RowDefinitions>
+            <BoxView               
+                Grid.Column="0"
+                Grid.Row="0"
+                Grid.RowSpan="4"
+                BackgroundColor="Black"
+                Style="{StaticResource LineStyle}" />
+            <Grid                 
+                Grid.Column="0"
+                Grid.Row="0">
+                <BoxView 
+                    HeightRequest="16"
+                    WidthRequest="16"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Color="{Binding Color}"
+                    Style="{StaticResource PointStyle}"/>
+                <BoxView           
+                    IsVisible="{OnPlatform Android=true, Default=false}"
+                    HeightRequest="10"   
+                    WidthRequest="10" 
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Color="{StaticResource WhiteColor}"
+                    Style="{StaticResource PointStyle}"/>
+            </Grid>
+            <Label
+                Grid.Column="2"
+                Grid.Row="0"
+                Text="{Binding Name}"
+                Style="{StaticResource NameTextStyle}"/>
+            <Label
+                Grid.Column="2"
+                Grid.Row="1"
+                Text="{Binding Category}"
+                Style="{StaticResource CategoryTextStyle}"/>
+            <Label
+                Grid.Column="1"
+                Grid.Row="0"
+                Text="{Binding Time}"
+                Style="{StaticResource TimeTextStyle}"/>
+            <StackLayout
+                Grid.Column="2"
+                Grid.Row="2"
+                Orientation="Horizontal"
+                BindableLayout.ItemsSource="{Binding People}"
+                Margin="0, 6">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Grid
+                            HeightRequest="40">
+                            <controls:CircularImage    
+                                EmbeddedImageName ="{Binding Photo}"
+                                Style="{StaticResource PhotoStyle}"/>
+                        </Grid>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

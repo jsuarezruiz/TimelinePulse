@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:templates="clr-namespace:TimelinePulse.Views.Templates"
+    xmlns:controls="clr-namespace:TimelinePulse.Controls"
+    x:Class="TimelinePulse.Views.TimelinePulseView"
+    BackgroundColor="{StaticResource WhiteColor}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <Style x:Key="BarTitleStyle" TargetType="Label">
+                <Setter Property="FontFamily" Value="{StaticResource PoppinsRegular}"/>
+                <Setter Property="FontSize" Value="{StaticResource FontSize14}" />
+                <Setter Property="TextColor" Value="{StaticResource WhiteColor}" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+
+            <Style x:Key="HeaderPanelStyle" TargetType="Grid">
+                <Setter Property="HeightRequest" Value="100" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="24, 36, 24, 0" />
+            </Style>
+
+            <Style x:Key="DayNumberHeaderLabelStyle" TargetType="Label">
+                <Setter Property="FontFamily" Value="{StaticResource PoppinsRegular}"/>
+                <Setter Property="FontSize" Value="{StaticResource FontSize60}" />
+                <Setter Property="TextColor" Value="{StaticResource WhiteColor}" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Start" />
+                <Setter Property="Margin" Value="0,-10, 0,0" />
+            </Style>
+
+            <Style x:Key="DayHeaderLabelStyle" TargetType="Label">
+                <Setter Property="FontFamily" Value="{StaticResource PoppinsLight}"/>
+                <Setter Property="FontSize" Value="{StaticResource FontSize24}" />
+                <Setter Property="TextColor" Value="{StaticResource WhiteColor}" />
+                <Setter Property="VerticalOptions" Value="End" />
+                <Setter Property="Margin" Value="12, 0" />
+            </Style>
+
+            <Style x:Key="MonthHeaderLabelStyle" TargetType="Label"
+                   BasedOn="{StaticResource DayHeaderLabelStyle}">
+                <Setter Property="VerticalOptions" Value="Start" />
+                <Setter Property="TextColor" Value="LightGray" />
+                <Setter Property="FontSize" Value="{StaticResource FontSize14}" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <NavigationPage.TitleView>
+        <Grid>
+            <Label 
+                Text="Timeline" 
+                Style="{StaticResource BarTitleStyle}"/>
+            <Grid
+                HorizontalOptions="End"
+                Margin="6, 0">
+                <controls:CircularImage 
+                    EmbeddedImageName="TimelinePulse.Resources.face1.jpg"/>
+                <BoxView 
+                    Color="{StaticResource PinkColor}"
+                    HeightRequest="6"
+                    WidthRequest="6"
+                    CornerRadius="12"
+                    HorizontalOptions="End"
+                    VerticalOptions="Start"
+                    Margin="2"/>
+            </Grid>
+        </Grid>
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        <Grid
+            RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150" />
+                <RowDefinition Height="100" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                BackgroundColor="{StaticResource AccentColor}"
+                Margin="0, 0, 0, 50">
+                <Image 
+                    Aspect="AspectFill"
+                    Source="background"/>
+                <Grid 
+                    BackgroundColor="{StaticResource AccentColor}"
+                    Opacity="0.25"/>
+                <Grid
+                    RowSpacing="0"
+                    Style="{StaticResource HeaderPanelStyle}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Label
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        Grid.RowSpan="2"
+                        Text="8"
+                        Style="{StaticResource DayNumberHeaderLabelStyle}"/> 
+                    <Label
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Text="Monday"
+                        Style="{StaticResource DayHeaderLabelStyle}"/>
+                    <Label
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        Text="FEBRUARY 2019"
+                        Style="{StaticResource MonthHeaderLabelStyle}"/>
+                </Grid>
+            </Grid>
+            <ListView  
+                Grid.Row="1"
+                Grid.RowSpan="2"
+                ItemsSource="{Binding Tasks}"
+                SelectionMode="None"
+                HasUnevenRows="True"
+                SeparatorVisibility="None"
+                CachingStrategy="RecycleElementAndDataTemplate"
+                Margin="0, 50, 0, 0">
+                <ListView.Header>
+                    <templates:TaskHeaderTemplate />
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <templates:TaskItemTemplate />
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Grid
+                Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="100" />
+                </Grid.ColumnDefinitions>
+                <controls:PulseButton
+                    Grid.Column="1"
+                    EmbeddedImageName="TimelinePulse.Resources.add.png"
+                    PulseColor="{StaticResource PinkColor}"
+                    PulseSpeed="10" />
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
